@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toni Waibot — AI Intelligence for Wealth Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:    #0a0e1a;
+      --navy2:   #0f1525;
+      --navy3:   #161d30;
+      --navy4:   #1e2640;
+      --gold:    #c9a84c;
+      --gold2:   #e8c96a;
+      --gold3:   #f5e0a0;
+      --silver:  #8b97b0;
+      --text:    #dce4f0;
+      --muted:   #6b7a96;
+      --border:  rgba(201,168,76,0.18);
+      --border2: rgba(201,168,76,0.08);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 4vw;
+      background: rgba(10,14,26,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border2);
+      transition: background 0.3s;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--gold2);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--text); font-style: italic; }
+    .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--silver);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold2); }
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold2) !important;
+      padding: 0.45rem 1.25rem;
+      border-radius: 2px;
+      font-size: 0.78rem !important;
+      letter-spacing: 0.14em !important;
+      transition: background 0.2s, color 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold) !important; color: var(--navy) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 24px; height: 1px; background: var(--gold2); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7rem 4vw 4rem;
+      overflow: hidden;
+    }
+    .hero-grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+    .hero-glow {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 900px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 500;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.4s forwards;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--gold2);
+    }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--silver);
+      max-width: 640px;
+      margin: 0 auto 3rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.6s forwards;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s forwards;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      padding: 0.85rem 2.2rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold2); transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 0.85rem 2.2rem;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(220,228,240,0.25);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold2); transform: translateY(-1px); }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      border-top: 1px solid var(--border2);
+      border-bottom: 1px solid var(--border2);
+      background: var(--navy2);
+      overflow: hidden;
+      padding: 0.9rem 0;
+      position: relative;
+      z-index: 1;
+    }
+    .ticker-track {
+      display: flex;
+      gap: 0;
+      width: max-content;
+      animation: ticker 40s linear infinite;
+    }
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0 2.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--silver);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      border-right: 1px solid var(--border2);
+    }
+    .ticker-item .tag {
+      color: var(--gold);
+      font-weight: 500;
+    }
+    .ticker-item .pos { color: #5fce8f; }
+    .ticker-item .neg { color: #e06060; }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 4vw; }
+    .section-pad { padding: 7rem 0; }
+
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 500;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+    h2 em { font-style: italic; color: var(--gold2); }
+
+    /* ── INTRO STRIP ── */
+    #intro {
+      background: var(--navy2);
+      border-top: 1px solid var(--border2);
+      border-bottom: 1px solid var(--border2);
+    }
+    .intro-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .intro-text p {
+      color: var(--silver);
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+    }
+    .intro-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .stat-card {
+      background: var(--navy3);
+      border: 1px solid var(--border);
+      padding: 1.75rem 1.5rem;
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 500;
+      color: var(--gold2);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── OFFICES ── */
+    #offices { background: var(--navy); }
+    .offices-header { text-align: center; max-width: 640px; margin: 0 auto 4rem; }
+    .offices-header p { color: var(--silver); }
+    .offices-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 3rem;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      width: max-content;
+      margin: 0 auto 3rem;
+    }
+    .tab-btn {
+      padding: 0.8rem 2rem;
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      border-right: 1px solid var(--border);
+    }
+    .tab-btn:last-child { border-right: none; }
+    .tab-btn.active { background: var(--gold); color: var(--navy); font-weight: 500; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+    .capability-card {
+      background: var(--navy3);
+      border: 1px solid var(--border2);
+      padding: 2rem 1.75rem;
+      border-radius: 3px;
+      transition: border-color 0.25s, transform 0.2s;
+      cursor: default;
+    }
+    .capability-card:hover {
+      border-color: var(--border);
+      transform: translateY(-3px);
+    }
+    .cap-icon {
+      width: 44px;
+      height: 44px;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cap-icon svg { width: 28px; height: 28px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+    .cap-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+      color: var(--text);
+    }
+    .cap-desc {
+      font-size: 0.88rem;
+      color: var(--silver);
+      line-height: 1.65;
+    }
+
+    /* ── CHAT DEMO ── */
+    #demo {
+      background: var(--navy2);
+      border-top: 1px solid var(--border2);
+      border-bottom: 1px solid var(--border2);
+    }
+    .demo-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .demo-copy p { color: var(--silver); margin-bottom: 1.5rem; }
+    .demo-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .demo-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--silver);
+    }
+    .demo-bullets li::before {
+      content: '◆';
+      color: var(--gold);
+      font-size: 0.55rem;
+      margin-top: 0.4rem;
+      flex-shrink: 0;
+    }
+    .chat-window {
+      background: var(--navy3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+    .chat-bar {
+      background: var(--navy4);
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid var(--border2);
+    }
+    .chat-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .chat-bar-title {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      color: var(--gold2);
+      font-weight: 500;
+      margin-left: 0.25rem;
+    }
+    .chat-status {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.68rem;
+      color: #5fce8f;
+      letter-spacing: 0.08em;
+    }
+    .chat-status::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: #5fce8f; }
+    .chat-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; min-height: 360px; }
+    .msg { max-width: 80%; display: flex; flex-direction: column; gap: 0.25rem; opacity: 0; animation: fadeUp 0.5s forwards; }
+    .msg.user { align-self: flex-end; }
+    .msg.bot  { align-self: flex-start; }
+    .msg-bubble {
+      padding: 0.8rem 1.1rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+    .msg.user .msg-bubble {
+      background: var(--navy4);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .msg.bot .msg-bubble {
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--text);
+    }
+    .msg-name { font-size: 0.68rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .msg.user .msg-name { text-align: right; }
+    .typing { display: flex; align-items: center; gap: 4px; padding: 0.8rem 1.1rem; }
+    .typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); opacity: 0.4; animation: blink 1.2s infinite; }
+    .typing span:nth-child(2) { animation-delay: 0.2s; }
+    .typing span:nth-child(3) { animation-delay: 0.4s; }
+    .chat-input-bar {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--border2);
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .chat-input {
+      flex: 1;
+      background: var(--navy4);
+      border: 1px solid var(--border2);
+      border-radius: 3px;
+      padding: 0.6rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .chat-input:focus { border-color: var(--gold); }
+    .chat-input::placeholder { color: var(--muted); }
+    .chat-send {
+      background: var(--gold);
+      border: none;
+      border-radius: 3px;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .chat-send:hover { background: var(--gold2); }
+    .chat-send svg { width: 16px; height: 16px; stroke: var(--navy); fill: none; stroke-width: 2; }
+
+    /* ── AGENTS ── */
+    #agents { background: var(--navy); }
+    .agents-header { text-align: center; max-width: 580px; margin: 0 auto 4rem; }
+    .agents-header p { color: var(--silver); }
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+    .agent-card {
+      background: var(--navy2);
+      border: 1px solid var(--border2);
+      padding: 2rem 1.5rem;
+      border-radius: 3px;
+      text-align: center;
+      transition: border-color 0.25s, transform 0.2s;
+    }
+    .agent-card:hover { border-color: var(--border); transform: translateY(-3px); }
+    .agent-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      margin: 0 auto 1.25rem;
+      background: var(--navy4);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--gold2);
+    }
+    .agent-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+      color: var(--text);
+    }
+    .agent-role {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+    .agent-desc {
+      font-size: 0.82rem;
+      color: var(--silver);
+      line-height: 1.6;
+    }
+
+    /* ── HOW IT WORKS ── */
+    #how {
+      background: var(--navy2);
+      border-top: 1px solid var(--border2);
+      border-bottom: 1px solid var(--border2);
+    }
+    .how-header { text-align: center; max-width: 560px; margin: 0 auto 4rem; }
+    .how-header p { color: var(--silver); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 32px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--gold), transparent);
+      opacity: 0.25;
+    }
+    .step { text-align: center; padding: 0 1rem; }
+    .step-num {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--navy3);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--gold2);
+      position: relative;
+      z-index: 1;
+    }
+    .step-title {
+      font-size: 0.88rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .step-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── COMPLIANCE ── */
+    #compliance { background: var(--navy); }
+    .compliance-inner {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .compliance-badges {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .badge-card {
+      background: var(--navy3);
+      border: 1px solid var(--border2);
+      padding: 1.5rem 1.25rem;
+      border-radius: 3px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .badge-icon { font-size: 1.4rem; }
+    .badge-title { font-size: 0.85rem; font-weight: 500; color: var(--text); }
+    .badge-sub { font-size: 0.78rem; color: var(--muted); }
+    .compliance-text p { color: var(--silver); margin-bottom: 1.25rem; }
+    .compliance-text .compliance-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+    .compliance-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.88rem;
+      color: var(--silver);
+    }
+    .compliance-list li::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { background: var(--navy2); border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border2); }
+    .testimonials-header { text-align: center; max-width: 520px; margin: 0 auto 4rem; }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .testimonial-card {
+      background: var(--navy3);
+      border: 1px solid var(--border2);
+      padding: 2rem 1.75rem;
+      border-radius: 3px;
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      color: var(--gold);
+      opacity: 0.15;
+      position: absolute;
+      top: 0.5rem;
+      left: 1.25rem;
+      line-height: 1;
+    }
+    .testimonial-text {
+      font-size: 0.9rem;
+      color: var(--silver);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+    .author-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--navy4);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+      color: var(--gold2);
+    }
+    .author-name { font-size: 0.85rem; font-weight: 500; color: var(--text); }
+    .author-title { font-size: 0.75rem; color: var(--muted); }
+    .stars { color: var(--gold); font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 0.75rem; }
+
+    /* ── PRICING ── */
+    #pricing { background: var(--navy); }
+    .pricing-header { text-align: center; max-width: 520px; margin: 0 auto 4rem; }
+    .pricing-header p { color: var(--silver); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .pricing-card {
+      background: var(--navy2);
+      border: 1px solid var(--border2);
+      padding: 2.5rem 2rem;
+      border-radius: 3px;
+      position: relative;
+      transition: border-color 0.25s;
+    }
+    .pricing-card.featured {
+      border-color: var(--gold);
+      background: var(--navy3);
+    }
+    .pricing-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -1px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.25rem 1rem;
+      border-radius: 0 0 3px 3px;
+    }
+    .plan-name {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .plan-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .plan-price sup {
+      font-size: 1.2rem;
+      vertical-align: super;
+      color: var(--gold2);
+    }
+    .plan-period { font-size: 0.78rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .plan-divider { border: none; border-top: 1px solid var(--border2); margin: 1.5rem 0; }
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 2rem; }
+    .plan-features li {
+      font-size: 0.85rem;
+      color: var(--silver);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .plan-features li::before {
+      content: '✓';
+      color: var(--gold);
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+    .plan-features li.na { color: var(--muted); }
+    .plan-features li.na::before { content: '–'; color: var(--muted); }
+
+    /* ── CTA BANNER ── */
+    #cta {
+      background: var(--navy3);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .cta-inner { max-width: 680px; margin: 0 auto; }
+    .cta-inner h2 { margin-bottom: 1rem; }
+    .cta-inner p { color: var(--silver); margin-bottom: 2.5rem; }
+    .cta-form {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+    .cta-email {
+      flex: 1;
+      background: var(--navy);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 0.85rem 1.25rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .cta-email:focus { border-color: var(--gold); }
+    .cta-email::placeholder { color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy2);
+      border-top: 1px solid var(--border2);
+      padding: 4rem 4vw 2rem;
+    }
+    .footer-grid {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border2);
+      margin-bottom: 2rem;
+    }
+    .footer-brand { }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--gold2);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .footer-tagline { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; max-width: 280px; }
+    .footer-social { display: flex; gap: 0.75rem; }
+    .social-link {
+      width: 34px; height: 34px;
+      border: 1px solid var(--border2);
+      border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .social-link:hover { border-color: var(--gold); color: var(--gold2); }
+    .footer-col h4 {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul li a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--text); }
+    .footer-bottom {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .footer-bottom a { color: var(--muted); text-decoration: none; }
+    .footer-bottom a:hover { color: var(--gold); }
+    .footer-disclaimer {
+      max-width: 1180px;
+      margin: 1.5rem auto 0;
+      font-size: 0.72rem;
+      color: var(--muted);
+      opacity: 0.7;
+      border-top: 1px solid var(--border2);
+      padding-top: 1.25rem;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.3); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .intro-inner, .demo-inner, .compliance-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .agents-grid { grid-template-columns: repeat(2, 1fr); }
+      .tab-panel.active { grid-template-columns: repeat(2, 1fr); }
+      .steps { grid-template-columns: repeat(3, 1fr); }
+      .steps::before { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .intro-stats { grid-template-columns: 1fr 1fr; }
+      .agents-grid { grid-template-columns: 1fr 1fr; }
+      .tab-panel.active { grid-template-columns: 1fr; }
+      .offices-tabs { width: 100%; flex-direction: column; }
+      .tab-btn { border-right: none; border-bottom: 1px solid var(--border); }
+      .tab-btn:last-child { border-bottom: none; }
+      .steps { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .cta-form { flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .compliance-badges { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="#">Toni <span>Waibot</span></a>
+  <div class="nav-links">
+    <a href="#offices">Capabilities</a>
+    <a href="#agents">Agents</a>
+    <a href="#demo">Demo</a>
+    <a href="#compliance">Compliance</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#cta" class="nav-cta">Request Access</a>
+  </div>
+  <div class="hamburger" onclick="document.querySelector('.nav-links').style.display = document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex'; document.querySelector('.nav-links').style.position='absolute'; document.querySelector('.nav-links').style.top='60px'; document.querySelector('.nav-links').style.left='0'; document.querySelector('.nav-links').style.right='0'; document.querySelector('.nav-links').style.background='var(--navy2)'; document.querySelector('.nav-links').style.padding='1.5rem 4vw'; document.querySelector('.nav-links').style.flexDirection='column'; document.querySelector('.nav-links').style.borderBottom='1px solid var(--border2)';">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-grid-lines"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">AI Multi-Agent Intelligence</div>
+    <h1>The Future of<br/><em>Wealth Management</em><br/>is Here</h1>
+    <p class="hero-subtitle">Toni Waibot orchestrates your entire wealth management operation — front, middle, and back office — with the intelligence of a seasoned team of specialists, available around the clock.</p>
+    <div class="hero-actions">
+      <a href="#demo" class="btn-primary">See Toni in Action</a>
+      <a href="#cta" class="btn-secondary">Request a Demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── TICKER ── -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<!-- ── INTRO ── -->
+<section id="intro">
+  <div class="container section-pad">
+    <div class="intro-inner reveal">
+      <div class="intro-text">
+        <p class="section-label">About Toni Waibot</p>
+        <h2>Intelligent by Design,<br/><em>Trusted by Professionals</em></h2>
+        <p>Toni Waibot is a multi-agent AI platform purpose-built for the wealth management industry. It combines deep domain expertise with intelligent automation to streamline every function of your operation — from client acquisition to regulatory reporting.</p>
+        <p>Whether you are a boutique wealth manager, an IFA network, or a large private bank, Toni scales seamlessly to meet your operational demands whilst maintaining the highest standards of compliance and client service.</p>
+        <a href="#offices" class="btn-primary">Explore Capabilities</a>
+      </div>
+      <div class="intro-stats">
+        <div class="stat-card">
+          <div class="stat-num">94%</div>
+          <div class="stat-label">Reduction in manual admin</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">3×</div>
+          <div class="stat-label">Faster client onboarding</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">£2.4M</div>
+          <div class="stat-label">Avg. annual cost savings</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">Always-on intelligence</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OFFICES ── -->
+<section id="offices">
+  <div class="container section-pad">
+    <div class="offices-header reveal">
+      <p class="section-label">Office Capabilities</p>
+      <h2>Every Office.<br/><em>One Intelligence.</em></h2>
+      <p>Toni Waibot covers the full operational breadth of a wealth management firm — no siloes, no gaps.</p>
+    </div>
+    <div class="offices-tabs reveal">
+      <button class="tab-btn active" onclick="switchTab('front')">Front Office</button>
+      <button class="tab-btn" onclick="switchTab('middle')">Middle Office</button>
+      <button class="tab-btn" onclick="switchTab('back')">Back Office</button>
+    </div>
+
+    <div id="tab-front" class="tab-panel active reveal">
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="cap-title">Client Acquisition & CRM</div>
+        <div class="cap-desc">Intelligent lead scoring, automated follow-ups, and personalised outreach to grow your AUM pipeline efficiently.</div>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg></div>
+        <div class="cap-title">Investment Proposals</div>
+        <div class="cap-desc">Auto-generate bespoke, compliant investment proposals tailored to each client's risk profile and financial goals.</div>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div class="cap-title">Portfolio Advisory</div>
+        <div class="cap-desc">Real-time market analysis and AI-driven recommendations, enabling advisers to deliver exceptional guidance at scale.</div>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="cap-title">Client Communication</div>
+        <div class="cap-desc">Personalised, compliant client communications — from market updates to annual reviews — drafted in seconds.</div>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="cap-title">Appointment Scheduling</div>
+        <div class="cap-desc">AI-powered diary management that prioritises your highest-value client meetings and automates reminders.</div>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <div class="cap-title">Sales Intelligence</div>
+        <div class="cap-desc">Identify upsell and cross-sell opportunities across your book of business with predictive revenue analytics.</div>
+      </div>
+    </div>
+
+    <div id="tab-middle" class="tab-panel reveal">
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <div class="cap-title">Risk & Compliance Monitoring</div>
+        <div class="cap-desc">Continuous regulatory monitoring aligned with FCA guidelines, MiFID II, and Consumer Duty obligations.</div>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <div class="cap-title">Portfolio Monitoring</div>
+        <div class="cap-desc">Real-time portfolio oversight with automated drift alerts, rebalancing triggers, and performance attribution.</div>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg></div>
+        <div class="cap-title">Trade Order Management</div>
+        <div class="cap-desc">Streamlined order routing, execution monitoring, and best execution reporting across all asset classes.</div>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="cap-title">KYC & AML Screening</div>
+        <div class="cap-desc">Automated identity verification, sanctions screening, and ongoing transaction monitoring to meet regulatory obligations.</div>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="cap-title">Suitability Assessment</div>
+        <div class="cap-desc">Dynamic suitability and appropriateness assessments that adapt to evolving client circumstances and market conditions.</div>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+        <div class="cap-title">Regulatory Reporting</div>
+        <div class="cap-desc">Automated preparation and submission of FCA, COBS, and MiFID II reports, eliminating manual reporting burden.</div>
+      </div>
+    </div>
+
+    <div id="tab-back" class="tab-panel reveal">
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+        <div class="cap-title">Fee Billing & Reconciliation</div>
+        <div class="cap-desc">Automated fee calculations, invoicing, and reconciliation across all fee structures — trail, fixed, and performance-based.</div>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <div class="cap-title">Custodian & Settlement</div>
+        <div class="cap-desc">Seamless custodian connectivity, settlement tracking, and corporate actions processing across multiple platforms.</div>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <div class="cap-title">Performance Reporting</div>
+        <div class="cap-desc">Automated, audit-ready client performance reports with GIPS-compliant return calculations and benchmarking.</div>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+        <div class="cap-title">Document Management</div>
+        <div class="cap-desc">Intelligent document storage, retrieval, and version control with automated audit trails and access controls.</div>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        <div class="cap-title">Data & Systems Integration</div>
+        <div class="cap-desc">Native connectors to leading platforms including Salesforce, Iress, FNZ, Pershing, and all major custody systems.</div>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="cap-title">HR & Payroll Automation</div>
+        <div class="cap-desc">Streamlined staff onboarding, payroll processing, and regulatory training compliance tracking for your entire team.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DEMO ── -->
+<section id="demo">
+  <div class="container section-pad">
+    <div class="demo-inner">
+      <div class="demo-copy reveal">
+        <p class="section-label">Live Interaction</p>
+        <h2>Ask Toni<br/><em>Anything</em></h2>
+        <p>Toni Waibot draws on a comprehensive knowledge base of wealth management, investment regulations, portfolio theory, tax planning, and client servicing — ready to assist advisers and operations teams in real time.</p>
+        <ul class="demo-bullets">
+          <li>Natural language queries across all business functions</li>
+          <li>Contextually aware across client history and portfolios</li>
+          <li>Generates compliant documents and reports on demand</li>
+          <li>Escalates complex decisions to human advisers appropriately</li>
+          <li>Full audit trail on every interaction and recommendation</li>
+        </ul>
+      </div>
+      <div class="chat-window reveal">
+        <div class="chat-bar">
+          <div class="chat-dot" style="background:#e06060"></div>
+          <div class="chat-dot" style="background:#e0b960"></div>
+          <div class="chat-dot" style="background:#60c060"></div>
+          <span class="chat-bar-title">Toni Waibot</span>
+          <span class="chat-status">Online</span>
+        </div>
+        <div class="chat-body" id="chat-body">
+          <div class="msg bot" style="animation-delay:0.3s">
+            <div class="msg-name">Toni Waibot</div>
+            <div class="msg-bubble">Good morning. I'm Toni, your AI wealth management assistant. How may I help you today?</div>
+          </div>
+        </div>
+        <div class="chat-input-bar">
+          <input type="text" class="chat-input" id="chat-input" placeholder="Ask Toni anything about wealth management…" />
+          <button class="chat-send" onclick="sendChat()">
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AGENTS ── -->
+<section id="agents">
+  <div class="container section-pad">
+    <div class="agents-header reveal">
+      <p class="section-label">The Agent Network</p>
+      <h2>Specialist Agents,<br/><em>Unified Intelligence</em></h2>
+      <p>Toni Waibot deploys a network of specialist AI agents, each expert in their domain, collaborating seamlessly under one unified orchestration layer.</p>
+    </div>
+    <div class="agents-grid reveal">
+      <div class="agent-card">
+        <div class="agent-avatar">A</div>
+        <div class="agent-name">Aria</div>
+        <div class="agent-role">Client Relations</div>
+        <div class="agent-desc">Manages client communications, meeting prep, and relationship intelligence to deepen adviser-client bonds.</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-avatar">M</div>
+        <div class="agent-name">Marcus</div>
+        <div class="agent-role">Market Intelligence</div>
+        <div class="agent-desc">Monitors global markets, generates investment research, and surfaces relevant opportunities for your portfolios.</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-avatar">C</div>
+        <div class="agent-name">Clara</div>
+        <div class="agent-role">Compliance Officer</div>
+        <div class="agent-desc">Ensures every action, communication, and recommendation remains within FCA and regulatory frameworks at all times.</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-avatar">R</div>
+        <div class="agent-name">Rex</div>
+        <div class="agent-role">Risk Analyst</div>
+        <div class="agent-desc">Monitors portfolio risk in real time, flags concentration issues, and models stress scenarios proactively.</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-avatar">F</div>
+        <div class="agent-name">Fiona</div>
+        <div class="agent-role">Financial Planning</div>
+        <div class="agent-desc">Delivers sophisticated financial planning models covering tax efficiency, retirement, estate planning, and cashflow.</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-avatar">O</div>
+        <div class="agent-name">Oscar</div>
+        <div class="agent-role">Operations</div>
+        <div class="agent-desc">Orchestrates back-office processes — settlements, reconciliations, and reporting — with precision and speed.</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-avatar">S</div>
+        <div class="agent-name">Stella</div>
+        <div class="agent-role">Sales & Business Dev.</div>
+        <div class="agent-desc">Identifies growth opportunities, scores prospects, and supports your business development team with intelligent insights.</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-avatar">T</div>
+        <div class="agent-name">Toni</div>
+        <div class="agent-role">Orchestrator</div>
+        <div class="agent-desc">The master intelligence layer that coordinates all agents, prioritises tasks, and maintains coherent context across your firm.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section id="how">
+  <div class="container section-pad">
+    <div class="how-header reveal">
+      <p class="section-label">Getting Started</p>
+      <h2>Up and Running in<br/><em>Five Simple Steps</em></h2>
+      <p>Toni Waibot is designed for rapid deployment with minimal disruption to your existing workflows.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Onboarding</div>
+        <div class="step-desc">We connect Toni to your existing systems, data sources, and workflows via secure API integrations.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Calibration</div>
+        <div class="step-desc">Toni learns your firm's preferences, investment philosophy, and compliance requirements in depth.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Pilot</div>
+        <div class="step-desc">A supervised pilot across selected functions ensures everything works precisely as you need it to.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">Full Deployment</div>
+        <div class="step-desc">Toni goes live across your chosen offices and functions, with your team in full control at all times.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-title">Continuous Learning</div>
+        <div class="step-desc">Toni improves continuously — learning from outcomes, regulatory changes, and your team's feedback.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPLIANCE ── -->
+<section id="compliance">
+  <div class="container section-pad">
+    <div class="compliance-inner">
+      <div class="compliance-badges reveal">
+        <div class="badge-card">
+          <div class="badge-icon">🏛️</div>
+          <div class="badge-title">FCA Aligned</div>
+          <div class="badge-sub">Consumer Duty & COBS compliant by design</div>
+        </div>
+        <div class="badge-card">
+          <div class="badge-icon">🔐</div>
+          <div class="badge-title">ISO 27001</div>
+          <div class="badge-sub">Enterprise-grade information security</div>
+        </div>
+        <div class="badge-card">
+          <div class="badge-icon">🇬🇧</div>
+          <div class="badge-title">UK GDPR</div>
+          <div class="badge-sub">Full data residency in the United Kingdom</div>
+        </div>
+        <div class="badge-card">
+          <div class="badge-icon">📋</div>
+          <div class="badge-title">MiFID II</div>
+          <div class="badge-sub">Best execution and reporting obligations met</div>
+        </div>
+        <div class="badge-card">
+          <div class="badge-icon">🛡️</div>
+          <div class="badge-title">SOC 2 Type II</div>
+          <div class="badge-sub">Independently audited security controls</div>
+        </div>
+        <div class="badge-card">
+          <div class="badge-icon">✅</div>
+          <div class="badge-title">SMCR Ready</div>
+          <div class="badge-sub">Senior Managers &amp; Certification Regime support</div>
+        </div>
+      </div>
+      <div class="compliance-text reveal">
+        <p class="section-label">Compliance & Security</p>
+        <h2>Built for Regulated<br/><em>Environments</em></h2>
+        <p>Financial services demand the highest standards of data security, regulatory compliance, and audit accountability. Toni Waibot is architected from the ground up to meet and exceed these expectations.</p>
+        <ul class="compliance-list">
+          <li>All data encrypted at rest and in transit (AES-256)</li>
+          <li>Complete audit log on every AI decision and recommendation</li>
+          <li>Role-based access controls and multi-factor authentication</li>
+          <li>Human-in-the-loop controls for regulated advice activities</li>
+          <li>Regular penetration testing and third-party security audits</li>
+          <li>Dedicated UK data sovereignty — no data leaves British shores</li>
+        </ul>
+        <a href="#cta" class="btn-primary">Download Security Overview</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section id="testimonials">
+  <div class="container section-pad">
+    <div class="testimonials-header reveal">
+      <p class="section-label">Client Voices</p>
+      <h2>Trusted by Wealth<br/><em>Professionals</em></h2>
+    </div>
+    <div class="testimonials-grid reveal">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">Toni has transformed how we operate. Our advisers now spend 70% of their time on client relationships rather than administration. The compliance monitoring alone has saved us tens of thousands in potential regulatory costs.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">JC</div>
+          <div>
+            <div class="author-name">Jonathan Caldwell</div>
+            <div class="author-title">Managing Director, Caldwell Private Wealth</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">The intelligence and depth of Toni's market knowledge is genuinely impressive. It surfaces insights our research team would take days to compile — delivered in seconds. Our investment committee now relies on it for every meeting.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">SR</div>
+          <div>
+            <div class="author-name">Sophia Rees</div>
+            <div class="author-title">Chief Investment Officer, Meridian Wealth</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">We were sceptical about AI in a highly regulated space. The team at Toni Waibot addressed every concern — the compliance framework is robust, the audit trails are impeccable, and the FCA alignment is genuinely baked in, not bolted on.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">AL</div>
+          <div>
+            <div class="author-name">Andrew Lawton</div>
+            <div class="author-title">Head of Compliance, Lawton &amp; Partners IFA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ── -->
+<section id="pricing">
+  <div class="container section-pad">
+    <div class="pricing-header reveal">
+      <p class="section-label">Investment Plans</p>
+      <h2>Straightforward,<br/><em>Transparent Pricing</em></h2>
+      <p>No hidden fees. No long lock-ins. Scale Toni across your firm at a pace that suits you.</p>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="pricing-card">
+        <div class="plan-name">Adviser</div>
+        <div class="plan-price"><sup>£</sup>495</div>
+        <div class="plan-period">per adviser / per month</div>
+        <hr class="plan-divider"/>
+        <ul class="plan-features">
+          <li>Toni AI assistant (front office)</li>
+          <li>Client communication drafting</li>
+          <li>Investment proposal generation</li>
+          <li>Suitability assessment support</li>
+          <li>CRM & diary integration</li>
+          <li class="na">Middle office automation</li>
+          <li class="na">Back office integration</li>
+          <li class="na">Multi-agent network</li>
+        </ul>
+        <a href="#cta" class="btn-secondary" style="display:block; text-align:center;">Get Started</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="plan-name">Practice</div>
+        <div class="plan-price"><sup>£</sup>1,850</div>
+        <div class="plan-period">per month (up to 10 users)</div>
+        <hr class="plan-divider"/>
+        <ul class="plan-features">
+          <li>Everything in Adviser</li>
+          <li>Full middle office automation</li>
+          <li>Compliance &amp; risk monitoring</li>
+          <li>KYC &amp; AML screening</li>
+          <li>Regulatory reporting (FCA/MiFID II)</li>
+          <li>Portfolio performance reporting</li>
+          <li>Sales intelligence agent (Stella)</li>
+          <li class="na">Back office integration</li>
+        </ul>
+        <a href="#cta" class="btn-primary" style="display:block; text-align:center;">Get Started</a>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price" style="font-size:2rem; padding-top:0.3rem;">Bespoke</div>
+        <div class="plan-period">tailored to your firm's needs</div>
+        <hr class="plan-divider"/>
+        <ul class="plan-features">
+          <li>Everything in Practice</li>
+          <li>Full back office integration</li>
+          <li>Custodian &amp; settlement connectivity</li>
+          <li>Bespoke agent configuration</li>
+          <li>Dedicated customer success manager</li>
+          <li>White-label options available</li>
+          <li>SLA-backed uptime guarantees</li>
+          <li>On-premise deployment option</li>
+        </ul>
+        <a href="#cta" class="btn-secondary" style="display:block; text-align:center;">Talk to Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BANNER ── -->
+<section id="cta">
+  <div class="container section-pad">
+    <div class="cta-inner reveal">
+      <p class="section-label">Get Started</p>
+      <h2>Ready to Transform<br/><em>Your Practice?</em></h2>
+      <p>Join the wealth managers who are already working smarter with Toni Waibot. Request a personalised demonstration from our team today.</p>
+      <div class="cta-form">
+        <input type="email" class="cta-email" placeholder="Your work email address" />
+        <button class="btn-primary" onclick="handleCTASubmit(this)">Request Demo</button>
+      </div>
+      <p style="font-size:0.75rem; color:var(--muted); margin-top:1rem;">No commitment required. Your data is processed in accordance with our Privacy Policy and UK GDPR.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="footer-logo">Toni Waibot</span>
+      <p class="footer-tagline">The multi-agent AI platform purpose-built for the wealth management industry. Intelligent, compliant, and always on.</p>
+      <div class="footer-social">
+        <a class="social-link" href="#" title="LinkedIn">in</a>
+        <a class="social-link" href="#" title="Twitter/X">𝕏</a>
+        <a class="social-link" href="#" title="YouTube">▶</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Platform</h4>
+      <ul>
+        <li><a href="#offices">Front Office</a></li>
+        <li><a href="#offices">Middle Office</a></li>
+        <li><a href="#offices">Back Office</a></li>
+        <li><a href="#agents">Agent Network</a></li>
+        <li><a href="#how">How It Works</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press &amp; Media</a></li>
+        <li><a href="#">Partners</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#">Documentation</a></li>
+        <li><a href="#">API Reference</a></li>
+        <li><a href="#">Security Overview</a></li>
+        <li><a href="#">Case Studies</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Toni Waibot Ltd. All rights reserved. Registered in England &amp; Wales.</span>
+    <span>
+      <a href="#">Privacy Policy</a> &nbsp;·&nbsp;
+      <a href="#">Terms of Service</a> &nbsp;·&nbsp;
+      <a href="#">Cookies</a>
+    </span>
+  </div>
+  <p class="footer-disclaimer">Toni Waibot is a technology platform and does not provide regulated financial advice. All outputs must be reviewed by suitably qualified and FCA-authorised individuals before being relied upon. Past performance is not a reliable indicator of future results. Toni Waibot Ltd is not authorised or regulated by the Financial Conduct Authority in its own right. Users are responsible for ensuring their use of this platform complies with all applicable regulations.</p>
+</footer>
+
+<script>
+  /* ── TICKER ── */
+  const tickerData = [
+    { tag: 'FTSE 100', val: '8,412.36', change: '+0.42%', pos: true },
+    { tag: 'S&P 500',  val: '5,281.14', change: '+0.18%', pos: true },
+    { tag: 'GBP/USD',  val: '1.2743',   change: '-0.09%', pos: false },
+    { tag: 'Gold',     val: '$2,341/oz', change: '+0.63%', pos: true },
+    { tag: 'FTSE 250', val: '19,872.44', change: '-0.22%', pos: false },
+    { tag: 'EUR/GBP',  val: '0.8571',   change: '+0.05%', pos: true },
+    { tag: 'UK Gilts', val: '4.21%',    change: '+2bps',  pos: false },
+    { tag: 'WTI Oil',  val: '$78.42',   change: '-0.31%', pos: false },
+    { tag: 'Bitcoin',  val: '£58,204',  change: '+1.24%', pos: true },
+    { tag: 'NASDAQ',   val: '18,374.19',change: '+0.31%', pos: true },
+  ];
+  const track = document.getElementById('ticker');
+  const html = tickerData.map(d =>
+    `<div class="ticker-item"><span class="tag">${d.tag}</span><span>${d.val}</span><span class="${d.pos ? 'pos' : 'neg'}">${d.change}</span></div>`
+  ).join('');
+  track.innerHTML = html + html; // duplicate for seamless loop
+
+  /* ── TABS ── */
+  function switchTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  /* ── SCROLL REVEAL ── */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ── CHAT ── */
+  const responses = {
+    default: "Thank you for your question. As your wealth management assistant, I have access to comprehensive knowledge across investment strategy, regulatory compliance, portfolio management, financial planning, and operational processes. Could you provide a little more context so I can give you the most relevant insight?",
+    portfolio: "I can see you're interested in portfolio management. I can assist with asset allocation modelling, risk-adjusted return analysis, rebalancing recommendations, stress testing across multiple scenarios, and generating compliant client-ready reports. Which aspect would you like to explore further?",
+    compliance: "Compliance is central to everything Toni does. I continuously monitor FCA Consumer Duty obligations, MiFID II requirements, COBS rules, and SMCR responsibilities. I can draft compliant client communications, flag potential regulatory issues before they arise, and produce audit-ready documentation on demand.",
+    report: "I can generate a range of reports immediately — client performance summaries, portfolio valuations, risk assessments, suitability reviews, and regulatory submissions. These are pre-formatted to FCA standards and ready for adviser sign-off. Which report type do you need?",
+    client: "Client management is one of my core strengths. I can review a client's full history, flag life events that may require a review, draft personalised communications, prepare meeting agendas, and generate updated suitability assessments — all in seconds.",
+    market: "I have access to real-time market data and can provide analysis on equities, fixed income, alternatives, and multi-asset strategies. I can also screen investments against ESG criteria, monitor portfolio drift, and surface opportunities aligned to your clients' risk profiles."
+  };
+
+  function getResponse(input) {
+    const l = input.toLowerCase();
+    if (l.includes('portfolio') || l.includes('invest') || l.includes('asset')) return responses.portfolio;
+    if (l.includes('compli') || l.includes('fca') || l.includes('regul') || l.includes('mifid')) return responses.compliance;
+    if (l.includes('report') || l.includes('statement') || l.includes('performance')) return responses.report;
+    if (l.includes('client') || l.includes('customer') || l.includes('onboard')) return responses.client;
+    if (l.includes('market') || l.includes('ftse') || l.includes('equit') || l.includes('bond')) return responses.market;
+    return responses.default;
+  }
+
+  function appendMsg(role, text, delay) {
+    const body = document.getElementById('chat-body');
+    const msg = document.createElement('div');
+    msg.className = `msg ${role}`;
+    msg.style.animationDelay = (delay || 0) + 's';
+    msg.innerHTML = `<div class="msg-name">${role === 'user' ? 'You' : 'Toni Waibot'}</div><div class="msg-bubble">${text}</div>`;
+    body.appendChild(msg);
+    body.scrollTop = body.scrollHeight;
+    return msg;
+  }
+
+  function showTyping() {
+    const body = document.getElementById('chat-body');
+    const t = document.createElement('div');
+    t.className = 'msg bot';
+    t.id = 'typing-indicator';
+    t.innerHTML = `<div class="msg-name">Toni Waibot</div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
+    body.appendChild(t);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function removeTyping() {
+    const t = document.getElementById('typing-indicator');
+    if (t) t.remove();
+  }
+
+  function sendChat() {
+    const input = document.getElementById('chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+    appendMsg('user', text);
+    input.value = '';
+    showTyping();
+    setTimeout(() => {
+      removeTyping();
+      appendMsg('bot', getResponse(text));
+    }, 1200 + Math.random() * 800);
+  }
+
+  document.getElementById('chat-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') sendChat();
+  });
+
+  /* ── CTA SUBMIT ── */
+  function handleCTASubmit(btn) {
+    const input = btn.previousElementSibling;
+    if (!input.value || !input.value.includes('@')) {
+      input.style.borderColor = '#e06060';
+      setTimeout(() => input.style.borderColor = '', 1500);
+      return;
+    }
+    btn.textContent = 'Request Sent ✓';
+    btn.style.background = '#5fce8f';
+    btn.style.color = '#0a0e1a';
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>
