@@ -1,4 +1,4 @@
-## one shot cla make site for uk wealth mgmt firm with agentic services
+## One shot cla make site for uk wealth mgmt firm with agentic services
 
-## see
+## Click:
 # https://toniwaibot.github.io/cla-web/#agents
